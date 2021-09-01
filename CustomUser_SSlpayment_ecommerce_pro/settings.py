@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'app_login',
     'app_shop',
 
+    
+    # third party
+    'django_seed',
+
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
