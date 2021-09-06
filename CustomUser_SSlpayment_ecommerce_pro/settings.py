@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'app_login',
     'app_shop',
-
+    'app_order',
     
     # third party
     'django_seed',
