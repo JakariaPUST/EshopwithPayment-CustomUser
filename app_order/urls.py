@@ -3,6 +3,5 @@ from app_order import views
 app_name = 'app_order'
 
 urlpatterns = [
-    # path('', views.Order.as_view(), name='order'),
-
+    path('<pk>/', views.add_to_cart, name='order'),
 ]
