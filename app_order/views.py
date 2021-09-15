@@ -32,6 +32,7 @@ def add_to_cart(request, pk):
         messages.info(request, "This item was added to your cart")
         return redirect("app_shop:home")
 
+# view cart details
 
 @login_required
 def cartview(request):
@@ -43,3 +44,25 @@ def cartview(request):
     else:
         messages.warning(request, "Cart empty!")
         return redirect('app_shop: home')
+
+# remove item
+@login_required()
+def remove_from_cart(request, pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.order_items.filter(item=item).exists():
+            order_item = Cart.objects.filter(
+                item=item, user=request.user, purchased=False)[0]
+            order.order_items.remove(order_item)
+            order_item.delete()
+            messages.warning(request, "This item was removed form your cart")
+            return redirect("app_order:cart")
+
+        else:
+            messages.info(request, "This item was not in your cart")
+            return redirect("app_shop:home")
+    else:
+        messages.info(request, "You don't have an active order!")
+        return redirect("app_shop:home")
